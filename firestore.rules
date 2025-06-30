@@ -1,0 +1,49 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{db}/documents {
+
+    /* ---------- Helper functions ------------------------------------ */
+
+    // True if the user is already a listed member.
+    function isExistingMember(familyId) {
+      return request.auth != null
+          && get(/databases/$(db)/documents/families/$(familyId))
+               .data.memberUIDs.hasAny([request.auth.uid]);
+    }
+
+    // True if the *incoming* write payload adds (or keeps) the user as member.
+    function addsSelfAsMember() {
+      return request.auth != null
+          && request.resource.data.memberUIDs.hasAny([request.auth.uid]);
+    }
+
+    // Optional viewer read‑only helper
+    function isViewer(familyId) {
+      return request.auth != null
+          && get(/databases/$(db)/documents/families/$(familyId))
+               .data.viewerUIDs.hasAny([request.auth.uid]);
+    }
+
+    /* ---------- Family document and everything below it ------------- */
+    match /families/{familyId} {
+
+      /* CREATE: document doesn't exist yet */
+      allow create: if addsSelfAsMember();
+
+      /* READ: must already be member or viewer */
+      allow get, list: if isExistingMember(familyId) || isViewer(familyId);
+
+      /* UPDATE: allow if already member **or** this write adds the caller */
+      allow update: if isExistingMember(familyId) || addsSelfAsMember();
+
+      /* DELETE: only existing members may delete */
+      allow delete: if isExistingMember(familyId);
+
+      /* Any sub‑collection (kids, quotes, etc.) */
+      match /{subPath=**} {
+        allow read, write: if isExistingMember(familyId);
+      }
+    }
+  }
+}
