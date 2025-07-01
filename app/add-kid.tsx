@@ -1,9 +1,9 @@
 import { useRouter } from "expo-router"
+import { collection, addDoc } from "firebase/firestore"
 import { useState } from "react"
 import { View, TextInput, Button } from "react-native"
-import { collection, addDoc, serverTimestamp } from "firebase/firestore"
-import { db } from "../constants/firebase"
 import { kidConverter } from "../constants/converters"
+import { db } from "../constants/firebase"
 import { useFamilyStore } from "../store/useFamilyStore"
 
 export default function AddKid() {

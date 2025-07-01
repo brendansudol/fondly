@@ -1,10 +1,9 @@
+import { useLocalSearchParams, useRouter } from "expo-router"
+import { collection, addDoc, serverTimestamp } from "firebase/firestore"
 import { useState } from "react"
 import { View, TextInput, Button } from "react-native"
-import { useLocalSearchParams, useRouter } from "expo-router"
-
-import { collection, addDoc, serverTimestamp } from "firebase/firestore"
-import { auth, db } from "../../constants/firebase"
 import { quoteConverter } from "../../constants/converters"
+import { auth, db } from "../../constants/firebase"
 import { useFamilyStore } from "../../store/useFamilyStore"
 
 export default function AddQuote() {

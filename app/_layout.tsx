@@ -1,10 +1,9 @@
-import { Tabs } from "expo-router"
-import { useEffect, useState } from "react"
+import { Tabs, useRouter } from "expo-router"
 import { onAuthStateChanged, User } from "firebase/auth"
 import { collection, query, where, getDocs } from "firebase/firestore"
+import { useEffect, useState } from "react"
 import { auth, db } from "../constants/firebase"
 import { useFamilyStore } from "../store/useFamilyStore"
-import { useRouter } from "expo-router"
 
 export default function RootLayout() {
   const [user, setUser] = useState<User | null | undefined>(undefined)

@@ -1,12 +1,11 @@
 import { useLocalSearchParams, Link } from "expo-router"
+import { collection, query, orderBy, onSnapshot } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { View, FlatList, Text } from "react-native"
-
-import { collection, query, orderBy, onSnapshot } from "firebase/firestore"
-import { db } from "../../constants/firebase"
 import { quoteConverter } from "../../constants/converters"
-import { Quote } from "../../types"
+import { db } from "../../constants/firebase"
 import { useFamilyStore } from "../../store/useFamilyStore"
+import { Quote } from "../../types"
 
 export default function Quotes() {
   const { kidId } = useLocalSearchParams<{ kidId?: string }>()

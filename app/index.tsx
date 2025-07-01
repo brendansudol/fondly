@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react"
-import { View, Pressable, Text } from "react-native"
 import { Link, useRouter } from "expo-router"
 import { collection, onSnapshot } from "firebase/firestore"
-import { db } from "../constants/firebase"
+import { useEffect, useState } from "react"
+import { View, Pressable, Text } from "react-native"
 import { kidConverter } from "../constants/converters"
-import { Kid } from "../types"
+import { db } from "../constants/firebase"
 import { useFamilyStore } from "../store/useFamilyStore"
+import { Kid } from "../types"
 
 export default function Kids() {
   const { familyId } = useFamilyStore()

@@ -1,9 +1,9 @@
+import { useRouter } from "expo-router"
+import { doc, setDoc, arrayUnion } from "firebase/firestore"
 import { useState } from "react"
 import { View, TextInput, Button, Alert } from "react-native"
-import { doc, setDoc, arrayUnion } from "firebase/firestore"
 import { auth, db } from "../constants/firebase"
 import { useFamilyStore } from "../store/useFamilyStore"
-import { useRouter } from "expo-router"
 
 export default function JoinFamily() {
   const [code, setCode] = useState("")
